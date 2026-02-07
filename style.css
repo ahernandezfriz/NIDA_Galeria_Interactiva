@@ -17,7 +17,9 @@ body {
     overflow: hidden; /* Evita scroll general */
 }
 
-/* --- Gestión de Pantallas --- */
+/* =========================================
+   GESTIÓN DE PANTALLAS
+   ========================================= */
 .screen {
     position: absolute;
     width: 100%;
@@ -31,48 +33,151 @@ body {
 .hidden { display: none !important; opacity: 0; }
 .active { display: flex; opacity: 1; }
 
-/* --- Pantalla 1: Menú --- */
-.menu-container {
-    flex: 1;
+/* Animación de entrada suave */
+.screen.active {
+    animation: fadeInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* =========================================
+   PANTALLA 1: NUEVO LAYOUT COLUMNAS (HOME)
+   ========================================= */
+
+/* Contenedor principal */
+.home-columns-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    padding: 0 !important; /* Sobrescribe el padding general */
+    overflow: hidden;
+}
+
+/* --- Columna Izquierda: Intro (Estática) --- */
+.col-intro {
+    flex: 0 0 22%; /* Ancho fijo */
+    background-color: #e5d8cd;
+    color: #2d3436;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 2rem;
-}
-
-.menu-options {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.menu-item {
-    width: 220px;
-    height: 180px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: transform 0.1s;
-    box-shadow: var(--shadow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 3rem;
     position: relative;
-    overflow: hidden;
-    background: white;
+    z-index: 2;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
 }
 
-.menu-item:active { transform: scale(0.95); }
+.logo-placeholder {
+    font-size: 2rem;
+    font-weight: bold;
+    border: 4px solid #2d3436;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 2rem;
+}
 
-/* Estilos específicos de botones menú */
-.btn-style { background: var(--primary); color: white; border: none; font-size: 1.5rem; }
-.img-style img { width: 100%; height: 100%; object-fit: cover; }
-.img-style .overlay-text { position: absolute; bottom: 0; background: rgba(0,0,0,0.6); color: white; width: 100%; text-align: center; padding: 10px; }
-.box-style { border: 2px solid var(--primary); flex-direction: column; }
-.box-style .icon { font-size: 3rem; color: var(--accent); }
+.col-intro h1 {
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: #7f331f;
+}
 
-/* --- Pantalla 2: Grilla --- */
+.intro-desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+/* --- Columnas Derecha: Navegación (Interactivas) --- */
+.col-nav {
+    flex: 1; /* Ocupan el espacio restante */
+    background-color: var(--bg-color);
+    color: white;
+    cursor: pointer;
+    position: relative;
+    padding: 2rem;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow: hidden;
+    /* Centrado del contenedor interno */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor Interno para centrar Contenido */
+.col-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrado Vertical */
+    align-items: center;     /* Centrado Horizontal */
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;    /* Click traspasa al padre */
+    transition: transform 0.4s ease;
+}
+
+/* ESTILO DEL NÚMERO (Corregido y Centrado) */
+.big-number {
+    font-size: 120px;       /* Muy grande */
+    font-weight: bold;
+    color: #ffffff;         /* Blanco puro */
+    line-height: 1;
+    margin-bottom: 15px;    /* Separación con el texto */
+    display: block;
+    transition: all 0.5s ease;
+}
+
+/* ESTILO DEL TEXTO (Sin título, grande y negrita) */
+.col-text {
+    font-size: 24px;        /* Grande pero menor al número */
+    font-weight: bold;      /* Negrita */
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.3;
+    max-width: 90%;         /* Evita que toque los bordes */
+    opacity: 1;             /* Aseguramos visibilidad total */
+}
+
+/* Ocultar títulos antiguos (h2) */
+.col-title {
+    display: none;
+}
+
+/* --- Interacciones (Hover / Active) --- */
+.col-nav:hover {
+    flex: 1.3; /* Efecto acordeón suave */
+}
+
+.col-nav:active {
+    filter: brightness(1.1);
+}
+
+.col-nav:hover .big-number,
+.col-nav:active .big-number {
+    transform: scale(1.1); /* Ligero zoom al número */
+}
+
+/* Indicador de toque */
+.touch-indicator {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.col-nav:active .touch-indicator {
+    width: 500px; height: 500px;
+    opacity: 0;
+}
+
+
+/* =========================================
+   PANTALLA 2: GRILLA Y GALERÍA
+   ========================================= */
 .gallery-header {
     display: flex;
     align-items: center;
@@ -87,13 +192,16 @@ body {
     border-radius: 30px;
     cursor: pointer;
     margin-right: 20px;
+    transition: transform 0.1s;
 }
+
+.btn-back:active { transform: scale(0.92); }
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive automático */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
-    overflow-y: auto; /* Scroll solo en la grilla si hay muchos items */
+    overflow-y: auto;
     padding-bottom: 50px;
 }
 
@@ -102,13 +210,28 @@ body {
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
-    aspect-ratio: 4/3; /* Mantiene proporción */
+    aspect-ratio: 4/3;
     cursor: pointer;
+    opacity: 0; /* JS maneja la entrada */
+    transform: translateY(20px);
+    transition: all 0.3s ease-out;
+}
+
+.grid-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.grid-item:active {
+    transform: scale(0.95);
 }
 
 .grid-item img { width: 100%; height: 100%; object-fit: cover; }
 
-/* --- Modal / Popup --- */
+
+/* =========================================
+   MODAL / POPUP
+   ========================================= */
 .modal {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -117,6 +240,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.modal:not(.hidden) .modal-content {
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .modal-content {
@@ -139,7 +266,7 @@ body {
 }
 
 .modal-image-container {
-    flex: 2; /* Ocupa 2/3 del espacio */
+    flex: 2;
     background: black;
     display: flex;
     align-items: center;
@@ -150,10 +277,13 @@ body {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.slide-change { opacity: 0; transform: scale(0.95); }
+
 .modal-text {
-    flex: 1; /* Ocupa 1/3 del espacio */
+    flex: 1;
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -176,8 +306,7 @@ body {
 
 .modal-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 20px; right: 20px;
     background: transparent;
     border: none;
     color: white;
@@ -185,7 +314,7 @@ body {
     cursor: pointer;
 }
 
-/* Layout vertical para pantallas pequeñas (tablets portrait) */
+/* Responsive Modal */
 @media (max-aspect-ratio: 1/1) {
     .modal-content { flex-direction: row; }
     .modal-body { flex-direction: column; }
@@ -193,89 +322,28 @@ body {
     .modal-text { flex: 1; padding: 1rem; }
 }
 
-/* --- 1. Animaciones Base (Keyframes) --- */
 
-/* Entrada suave hacia arriba */
+/* =========================================
+   ANIMACIONES (KEYFRAMES)
+   ========================================= */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Entrada tipo "Pop" para el Modal */
 @keyframes popIn {
     0% { opacity: 0; transform: scale(0.8); }
-    70% { transform: scale(1.05); } /* Rebote ligero */
+    70% { transform: scale(1.05); }
     100% { opacity: 1; transform: scale(1); }
 }
 
-/* --- 2. Aplicación a Componentes --- */
-
-/* Pantallas: Suavizar la aparición */
-.screen.active {
-    animation: fadeInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-/* Items de la Galería: Estado inicial invisible */
-.grid-item {
-    opacity: 0; /* JS se encargará de hacerlo aparecer */
-    transform: translateY(20px);
-    transition: all 0.3s ease-out; /* Transición para el hover/click */
-}
-
-/* Clase que JS agregará a cada imagen para que aparezca */
-.grid-item.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Feedback Táctil Mejorado (Botones) */
-.menu-item, .btn-back, .grid-item {
-    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
-}
-
-.menu-item:active, .grid-item:active, .btn-back:active {
-    transform: scale(0.92) !important; /* Efecto de presión */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra se reduce al presionar */
-}
-
-/* Modal: Animación de entrada */
-.modal:not(.hidden) .modal-content {
-    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Transición suave al cambiar imagen dentro del modal */
-.modal-image-container img {
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-/* Clase para efecto de 'slide' al cambiar foto */
-.slide-change {
-    opacity: 0;
-    transform: scale(0.95);
-}
-
-/* --- Animación de Atención (Pulso) --- */
 @keyframes pulse-attention {
-    0% {
-        transform: scale(1);
-        background: rgba(255,255,255,0.2);
-        box-shadow: 0 0 0 rgba(255,255,255,0);
-    }
-    50% {
-        transform: scale(1.15); /* Crece un 15% */
-        background: rgba(255,255,255,0.5); /* Se hace más brillante */
-        box-shadow: 0 0 15px rgba(255,255,255,0.4); /* Resplandor */
-    }
-    100% {
-        transform: scale(1);
-        background: rgba(255,255,255,0.2);
-        box-shadow: 0 0 0 rgba(255,255,255,0);
-    }
+    0% { transform: scale(1); background: rgba(255,255,255,0.2); box-shadow: 0 0 0 rgba(255,255,255,0); }
+    50% { transform: scale(1.15); background: rgba(255,255,255,0.5); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+    100% { transform: scale(1); background: rgba(255,255,255,0.2); box-shadow: 0 0 0 rgba(255,255,255,0); }
 }
 
-/* Clase que aplicaremos con JS cuando haya inactividad */
 .nav-btn.attention {
     animation: pulse-attention 2s infinite ease-in-out;
-    /* Aseguramos que sea visible por encima de todo */
     z-index: 10; 
 }

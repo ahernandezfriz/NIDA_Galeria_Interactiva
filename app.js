@@ -152,6 +152,27 @@ function removePulseEffect() {
     btns.forEach(btn => btn.classList.remove('attention'));
 }
 
+function handleNavClick(element, categoryName) {
+    // 1. Efecto Visual: Expandir la columna seleccionada
+    // Removemos clase activa de otros si hubiera
+    document.querySelectorAll('.col-nav').forEach(col => col.classList.remove('active-col'));
+    
+    // Añadimos clase activa a la clicada para que el CSS la expanda
+    element.classList.add('active-col');
+    
+    // 2. Esperar la animación (500ms) antes de cambiar de pantalla
+    setTimeout(() => {
+        // Cargar la galería
+        loadGallery(categoryName);
+        
+        // Resetear el estado visual de las columnas para cuando volvamos
+        setTimeout(() => {
+            element.classList.remove('active-col');
+        }, 500); 
+        
+    }, 400); // 400ms espera, un poco menos que la transición CSS para que se sienta ágil
+}
+
 // Cerrar modal con tecla ESC (útil para pruebas en desarrollo)
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();

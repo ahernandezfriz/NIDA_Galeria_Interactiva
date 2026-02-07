@@ -5,29 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Galería Táctil Interactiva</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Forzamos el centrado vertical y horizontal del contenido de la columna */
+        .col-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centrado vertical en la columna */
+            align-items: center;     /* Centrado horizontal */
+            text-align: center;      /* Texto centrado */
+            height: 100%;            /* Ocupar todo el alto disponible */
+            padding: 0 20px;         /* Un poco de margen a los lados para que no toque bordes */
+        }
+
+        /* Estilo del NÚMERO */
+        .big-number {
+            font-size: 120px;     /* Muy grande */
+            font-weight: bold;
+            color: #ffffff;       /* Blanco */
+            line-height: 1;
+            margin-bottom: 10px;  /* Espacio "un poco más abajo" para el texto */
+            display: block;
+        }
+
+        /* Estilo del TEXTO (Sin título, negrita y grande) */
+        .col-text {
+            font-size: 24px;      /* Grande, pero menor que el número */
+            font-weight: bold;    /* Negritas */
+            color: #ffffff;       /* Blanco */
+            margin: 0;
+            line-height: 1.2;
+            max-width: 90%;       /* Para que no quede pegado a los bordes */
+        }
+
+        /* Ocultar títulos antiguos por si quedan residuos de estilos */
+        .col-title {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
-    <section id="screen-home" class="screen active">
-        <div class="menu-container">
-            <h1>Bienvenido</h1>
-            <p>Seleccione una categoría</p>
-            <div class="menu-options">
-                <button class="menu-item btn-style" onclick="loadGallery('categoria1')">
-                    <span>Opción 1</span>
-                </button>
-                
-                <div class="menu-item img-style" onclick="loadGallery('categoria2')">
-                    <img src="https://picsum.photos/300/200?random=10" alt="Opción 2">
-                    <div class="overlay-text">Opción 2</div>
-                </div>
-
-                <div class="menu-item box-style" onclick="loadGallery('categoria3')">
-                    <div class="icon">★</div>
-                    <h3>Opción 3</h3>
-                </div>
+    <section id="screen-home" class="screen active home-columns-layout">
+        
+        <aside class="col-intro">
+            <div class="brand-area">
+                <div class="logo-placeholder">LOGO</div>
+                <h1>Museo<br>Interactivo</h1>
+                <p class="intro-desc">Toque una sección para comenzar el recorrido virtual.</p>
             </div>
-        </div>
+        </aside>
+
+        <article class="col-nav" style="--bg-color: #a8573a;" onclick="handleNavClick(this, 'Historia')">
+            <div class="col-content">
+                <span class="big-number">1</span>
+                <p class="col-text">Experiencia del paisaje en los entornos de origen y destino</p>
+                <div class="touch-indicator"></div>
+            </div>
+        </article>
+
+        <article class="col-nav" style="--bg-color: #8e442d;" onclick="handleNavClick(this, 'Arquitectura')">
+            <div class="col-content">
+                <span class="big-number">2</span>
+                <p class="col-text">Experiencia del barrio y la vivienda en los entornos de origen y destino</p>
+                <div class="touch-indicator"></div>
+            </div>
+        </article>
+
+        <article class="col-nav" style="--bg-color: #7f331f;" onclick="handleNavClick(this, 'Futuro')">
+            <div class="col-content">
+                <span class="big-number">3</span>
+                <p class="col-text">Experiencia del ciclo cotidiano</p>
+                <div class="touch-indicator"></div>
+            </div>
+        </article>
+
     </section>
 
     <section id="screen-gallery" class="screen hidden">
