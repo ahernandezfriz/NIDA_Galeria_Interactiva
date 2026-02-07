@@ -1,0 +1,281 @@
+:root {
+    --primary: #2c3e50;
+    --accent: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2d3436;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+    --radius: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; /* Evita selección de texto en kioscos */ }
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--light);
+    color: var(--dark);
+    height: 100vh;
+    overflow: hidden; /* Evita scroll general */
+}
+
+/* --- Gestión de Pantallas --- */
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden { display: none !important; opacity: 0; }
+.active { display: flex; opacity: 1; }
+
+/* --- Pantalla 1: Menú --- */
+.menu-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.menu-options {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.menu-item {
+    width: 220px;
+    height: 180px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: transform 0.1s;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: white;
+}
+
+.menu-item:active { transform: scale(0.95); }
+
+/* Estilos específicos de botones menú */
+.btn-style { background: var(--primary); color: white; border: none; font-size: 1.5rem; }
+.img-style img { width: 100%; height: 100%; object-fit: cover; }
+.img-style .overlay-text { position: absolute; bottom: 0; background: rgba(0,0,0,0.6); color: white; width: 100%; text-align: center; padding: 10px; }
+.box-style { border: 2px solid var(--primary); flex-direction: column; }
+.box-style .icon { font-size: 3rem; color: var(--accent); }
+
+/* --- Pantalla 2: Grilla --- */
+.gallery-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.btn-back {
+    background: transparent;
+    border: 2px solid var(--primary);
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive automático */
+    gap: 20px;
+    overflow-y: auto; /* Scroll solo en la grilla si hay muchos items */
+    padding-bottom: 50px;
+}
+
+.grid-item {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    aspect-ratio: 4/3; /* Mantiene proporción */
+    cursor: pointer;
+}
+
+.grid-item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- Modal / Popup --- */
+.modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    height: 80%;
+    gap: 20px;
+}
+
+.modal-body {
+    flex: 1;
+    background: white;
+    height: 100%;
+    border-radius: var(--radius);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.modal-image-container {
+    flex: 2; /* Ocupa 2/3 del espacio */
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.modal-text {
+    flex: 1; /* Ocupa 1/3 del espacio */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #f9f9f9;
+}
+
+/* Botones Navegación Modal */
+.nav-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 3rem;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+.nav-btn:hover, .nav-btn:active { background: rgba(255,255,255,0.5); }
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+/* Layout vertical para pantallas pequeñas (tablets portrait) */
+@media (max-aspect-ratio: 1/1) {
+    .modal-content { flex-direction: row; }
+    .modal-body { flex-direction: column; }
+    .modal-image-container { flex: 1.5; }
+    .modal-text { flex: 1; padding: 1rem; }
+}
+
+/* --- 1. Animaciones Base (Keyframes) --- */
+
+/* Entrada suave hacia arriba */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Entrada tipo "Pop" para el Modal */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    70% { transform: scale(1.05); } /* Rebote ligero */
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* --- 2. Aplicación a Componentes --- */
+
+/* Pantallas: Suavizar la aparición */
+.screen.active {
+    animation: fadeInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Items de la Galería: Estado inicial invisible */
+.grid-item {
+    opacity: 0; /* JS se encargará de hacerlo aparecer */
+    transform: translateY(20px);
+    transition: all 0.3s ease-out; /* Transición para el hover/click */
+}
+
+/* Clase que JS agregará a cada imagen para que aparezca */
+.grid-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Feedback Táctil Mejorado (Botones) */
+.menu-item, .btn-back, .grid-item {
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+}
+
+.menu-item:active, .grid-item:active, .btn-back:active {
+    transform: scale(0.92) !important; /* Efecto de presión */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra se reduce al presionar */
+}
+
+/* Modal: Animación de entrada */
+.modal:not(.hidden) .modal-content {
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Transición suave al cambiar imagen dentro del modal */
+.modal-image-container img {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Clase para efecto de 'slide' al cambiar foto */
+.slide-change {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* --- Animación de Atención (Pulso) --- */
+@keyframes pulse-attention {
+    0% {
+        transform: scale(1);
+        background: rgba(255,255,255,0.2);
+        box-shadow: 0 0 0 rgba(255,255,255,0);
+    }
+    50% {
+        transform: scale(1.15); /* Crece un 15% */
+        background: rgba(255,255,255,0.5); /* Se hace más brillante */
+        box-shadow: 0 0 15px rgba(255,255,255,0.4); /* Resplandor */
+    }
+    100% {
+        transform: scale(1);
+        background: rgba(255,255,255,0.2);
+        box-shadow: 0 0 0 rgba(255,255,255,0);
+    }
+}
+
+/* Clase que aplicaremos con JS cuando haya inactividad */
+.nav-btn.attention {
+    animation: pulse-attention 2s infinite ease-in-out;
+    /* Aseguramos que sea visible por encima de todo */
+    z-index: 10; 
+}

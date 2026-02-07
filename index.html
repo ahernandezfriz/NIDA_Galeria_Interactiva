@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galería Táctil Interactiva</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <section id="screen-home" class="screen active">
+        <div class="menu-container">
+            <h1>Bienvenido</h1>
+            <p>Seleccione una categoría</p>
+            <div class="menu-options">
+                <button class="menu-item btn-style" onclick="loadGallery('categoria1')">
+                    <span>Opción 1</span>
+                </button>
+                
+                <div class="menu-item img-style" onclick="loadGallery('categoria2')">
+                    <img src="https://picsum.photos/300/200?random=10" alt="Opción 2">
+                    <div class="overlay-text">Opción 2</div>
+                </div>
+
+                <div class="menu-item box-style" onclick="loadGallery('categoria3')">
+                    <div class="icon">★</div>
+                    <h3>Opción 3</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="screen-gallery" class="screen hidden">
+        <div class="gallery-header">
+            <button class="btn-back" onclick="goHome()">&#8592; Volver</button>
+            <h2 id="gallery-title">Galería</h2>
+        </div>
+        <div class="grid-container" id="grid-container">
+            </div>
+    </section>
+
+    <div id="modal-overlay" class="modal hidden">
+        <button class="modal-close" onclick="closeModal()">&#10005;</button>
+        
+        <div class="modal-content">
+            <button class="nav-btn prev" onclick="changeImage(-1)">&#10094;</button>
+            
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img id="modal-img" src="" alt="Detalle">
+                </div>
+                <div class="modal-text">
+                    <h3 id="modal-title">Título</h3>
+                    <p id="modal-desc">Descripción detallada aquí.</p>
+                </div>
+            </div>
+
+            <button class="nav-btn next" onclick="changeImage(1)">&#10095;</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
