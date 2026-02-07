@@ -18,15 +18,7 @@
             padding: 0 20px;         /* Un poco de margen a los lados para que no toque bordes */
         }
 
-        /* Estilo del NÚMERO */
-        .big-number {
-            font-size: 120px;     /* Muy grande */
-            font-weight: bold;
-            color: #ffffff;       /* Blanco */
-            line-height: 1;
-            margin-bottom: 10px;  /* Espacio "un poco más abajo" para el texto */
-            display: block;
-        }
+
 
         /* Estilo del TEXTO (Sin título, negrita y grande) */
         .col-text {
@@ -56,7 +48,7 @@
             </div>
         </aside>
 
-        <article class="col-nav" style="--bg-color: #a8573a;" onclick="handleNavClick(this, 'Historia')">
+        <article class="col-nav" style="--bg-color: #a8573a;" onclick="handleNavClick(this, 'uno')">
             <div class="col-content">
                 <span class="big-number">1</span>
                 <p class="col-text">Experiencia del paisaje en los entornos de origen y destino</p>
@@ -64,7 +56,7 @@
             </div>
         </article>
 
-        <article class="col-nav" style="--bg-color: #8e442d;" onclick="handleNavClick(this, 'Arquitectura')">
+        <article class="col-nav" style="--bg-color: #8e442d;" onclick="handleNavClick(this, 'dos')">
             <div class="col-content">
                 <span class="big-number">2</span>
                 <p class="col-text">Experiencia del barrio y la vivienda en los entornos de origen y destino</p>
@@ -72,7 +64,7 @@
             </div>
         </article>
 
-        <article class="col-nav" style="--bg-color: #7f331f;" onclick="handleNavClick(this, 'Futuro')">
+        <article class="col-nav" style="--bg-color: #7f331f;" onclick="handleNavClick(this, 'tres')">
             <div class="col-content">
                 <span class="big-number">3</span>
                 <p class="col-text">Experiencia del ciclo cotidiano</p>
@@ -82,13 +74,32 @@
 
     </section>
 
-    <section id="screen-gallery" class="screen hidden">
-        <div class="gallery-header">
-            <button class="btn-back" onclick="goHome()">&#8592; Volver</button>
-            <h2 id="gallery-title">Galería</h2>
-        </div>
-        <div class="grid-container" id="grid-container">
+    <section id="screen-gallery" class="screen hidden gallery-split-layout">
+        
+        <aside class="gallery-sidebar">
+            <div class="sidebar-header">
+                <button class="btn-back-sidebar" onclick="goHome()">&#8592; Volver</button>
             </div>
+            
+            <div class="sidebar-content">
+                <span id="sidebar-number" class="big-number-sidebar"></span>
+                <h2 id="sidebar-title" class="sidebar-section-title">SECCIÓN</h2> <p id="sidebar-short-desc" class="sidebar-desc-bold"></p>
+                
+                <div class="sidebar-divider"></div>
+                
+                <p class="sidebar-long-desc">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    <br><br>
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </p>
+            </div>
+        </aside>
+
+        <main class="gallery-main-area">
+            <div class="cards-grid" id="cards-grid-container">
+            </div>
+        </main>
+
     </section>
 
     <div id="modal-overlay" class="modal hidden">

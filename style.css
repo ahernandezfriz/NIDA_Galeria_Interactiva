@@ -347,3 +347,153 @@ body {
     animation: pulse-attention 2s infinite ease-in-out;
     z-index: 10; 
 }
+
+
+
+
+
+/* =========================================
+   NUEVOS ESTILOS PANTALLA 2 (Layout Dividido y Tarjetas)
+   ========================================= */
+
+/* Contenedor principal de la pantalla dividida */
+.gallery-split-layout {
+    display: flex;
+    flex-direction: row;
+    padding: 0 !important; /* Sin padding general para tocar bordes */
+    background-color: var(--light);
+    overflow: hidden;
+}
+
+/* --- SIDEBAR IZQUIERDA (Estilo "Intro") --- */
+.gallery-sidebar {
+    flex: 0 0 25%; /* Ancho fijo, similar a la intro home */
+    background-color: #e5d8cd; /* Mismo color que la intro home */
+    color: #2d3436;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    z-index: 2;
+    overflow-y: auto; /* Scroll si la descripción larga es muy larga */
+}
+
+.btn-back-sidebar {
+    background: transparent;
+    border: 2px solid #2d3436;
+    color: #2d3436;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    display: inline-block;
+    transition: all 0.2s;
+}
+.btn-back-sidebar:hover { background: rgba(45, 52, 54, 0.1); }
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; Si prefieres el texto centrado, descomenta esto */
+}
+
+/* El número en el sidebar (Oscuro para contrastar con el fondo claro) */
+.big-number-sidebar {
+    font-size: 100px;
+    font-weight: 900;
+    color: #7f331f; /* Usamos el tono rojizo oscuro del diseño */
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.sidebar-section-title {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+.sidebar-desc-bold {
+    font-size: 1.4rem;
+    font-weight: bold;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+}
+
+.sidebar-divider {
+    width: 50px;
+    height: 4px;
+    background-color: #7f331f;
+    margin-bottom: 2rem;
+}
+
+.sidebar-long-desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* --- ÁREA PRINCIPAL DERECHA (Grilla) --- */
+.gallery-main-area {
+    flex: 1;
+    padding: 3rem;
+    overflow-y: auto; /* Scroll independiente para las tarjetas */
+    background-color: #f0f2f5; /* Un gris muy claro para el fondo de las tarjetas */
+}
+
+.cards-grid {
+    display: grid;
+    /* Columnas responsivas: mínimo 250px de ancho */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding-bottom: 50px;
+}
+
+/* --- DISEÑO DE LA TARJETA (CARD) --- */
+.woman-card {
+    background-color: #a8573a; /* Color solicitado */
+    border-radius: var(--radius); /* Bordes redondeados (12px) */
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white; /* Texto blanco */
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default; /* No es clickable por ahora */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Animación de entrada */
+.woman-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.woman-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(168, 87, 58, 0.4);
+}
+
+.card-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.card-name {
+    font-size: 1.8rem; /* Grande */
+    font-weight: 800;  /* Negrita extra */
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.card-city {
+    font-size: 1.1rem; /* Más pequeño */
+    font-weight: 300;  /* Light */
+    opacity: 0.9;
+}
