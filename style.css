@@ -292,17 +292,43 @@ body {
 }
 
 /* Botones Navegación Modal */
+/* Botones Navegación Modal */
 .nav-btn {
-    background: rgba(255,255,255,0.2);
+    background-color: #a8573a; /* Color solicitado */
+    color: white;              /* Flecha blanca */
     border: none;
-    color: white;
-    font-size: 3rem;
-    padding: 20px;
+    
+    /* Dimensiones fijas para asegurar circulo perfecto */
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;        /* Redondo */
+    
+    /* Centrado perfecto de la flecha */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 2rem;           /* Tamaño de la flecha */
     cursor: pointer;
-    border-radius: 50%;
-    transition: background 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra para dar relieve */
+    transition: transform 0.2s, background-color 0.2s;
+    
+    /* Aseguramos que no se seleccionen al tocar rápido */
+    user-select: none; 
 }
-.nav-btn:hover, .nav-btn:active { background: rgba(255,255,255,0.5); }
+
+/* Efectos de interacción */
+.nav-btn:hover {
+    background-color: #8e442d; /* Un tono un poco más oscuro al pasar el mouse */
+    transform: scale(1.1);     /* Crece un poco */
+}
+
+.nav-btn:active {
+    transform: scale(0.95);    /* Efecto de presión */
+    background-color: #7f331f;
+}
+
+
 
 .modal-close {
     position: absolute;
